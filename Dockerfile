@@ -9,6 +9,10 @@ RUN apk --no-cache add python python3 python3-dev py-pip ca-certificates groff l
     pip --no-cache-dir install awscli && \
     update-ca-certificates
 
+RUN curl https://sdk.cloud.google.com > install.sh && \
+    bash install.sh --disable-prompts && \
+    source /root/google-cloud-sdk/path.bash.inc
+
 RUN wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub && \
     wget -q https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.25-r0/glibc-2.25-r0.apk && \
     apk add glibc-2.25-r0.apk && \
