@@ -1,0 +1,17 @@
+resources:
+  - type: storage.v1.bucket
+    name: sls-node-simple-http-endpoint-4-dev-1603687601832
+  - type: 'gcp-types/cloudfunctions-v1:projects.locations.functions'
+    name: node-simple-http-endpoint-4-dev-helloWorld
+    properties:
+      parent: projects/daring-octane-293422/locations/us-central1
+      availableMemoryMb: 256
+      runtime: nodejs8
+      timeout: 60s
+      entryPoint: http
+      function: node-simple-http-endpoint-4-dev-helloWorld
+      sourceArchiveUrl: >-
+        gs://sls-node-simple-http-endpoint-4-dev-1603687601832/serverless/node-simple-http-endpoint-4/dev/1603768784835-2020-10-27T03:19:44.835Z/node-simple-http-endpoint-4.zip
+      labels: {}
+      httpsTrigger:
+        url: path

@@ -1,0 +1,31 @@
+service: node-simple-http-endpoint-4
+
+provider:
+  name: google
+  runtime: 'nodejs8'
+  project: daring-octane-293422
+  credentials: /root/.gcloud/keyfile.json
+  stage: dev
+
+plugins:
+  - serverless-google-cloudfunctions
+  - serverless-plugin-scripts
+
+package:
+  exclude:
+    - node_modules/**
+    - .gitignore
+    - .git/**
+
+functions:
+  helloWorld:
+    handler: http
+    events:
+      - http: path
+
+custom:
+  scripts:
+    commands:
+      make-public: gcloud auth login && gcloud functions add-iam-policy-binding ${self:service}-${self:provider.stage}-${opt:function, "hellowWorld"} --member="allUsers" --role="roles/cloudfunctions.invoker" --project=${self:provider.project}  | xargs echo 
+    hooks:
+      'after:deploy:deploy': npx sls make-public --function=hellowWorld
